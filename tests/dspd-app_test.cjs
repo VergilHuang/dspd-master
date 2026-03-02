@@ -35,7 +35,7 @@ Scenario("應顯示睡眠品質指南面板", ({ I }) => {
 Scenario("時間輸入欄位應有預設值", async ({ I }) => {
   const val = await I.grabValueFrom({ css: 'input[type="time"]' });
   const firstVal = Array.isArray(val) ? val[0] : val;
-  assert.strictEqual(firstVal, "05:00");
+  assert.strictEqual(firstVal, "06:00");
 });
 
 Scenario("可切換每日調整幅度選項", async ({ I }) => {

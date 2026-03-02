@@ -20,11 +20,16 @@ export const generatePlan = (inputs) => {
   const startWakeMin = timeToMinutes(inputs.currentWake);
 
   for (let i = 0; i <= daysNeeded; i++) {
-    const ratio = i / daysNeeded;
+    const currentShift = i * inputs.shiftPerDay;
+    const sleepShift =
+      Math.sign(sleepDiff) * Math.min(Math.abs(sleepDiff), currentShift);
+    const wakeShift =
+      Math.sign(wakeDiff) * Math.min(Math.abs(wakeDiff), currentShift);
+
     plan.push({
       day: i + 1,
-      sleep: minutesToTime(startSleepMin + sleepDiff * ratio),
-      wake: minutesToTime(startWakeMin + wakeDiff * ratio),
+      sleep: minutesToTime(startSleepMin + sleepShift),
+      wake: minutesToTime(startWakeMin + wakeShift),
     });
   }
 
