@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npx playwright test",
+    "reposrt": "npx playwright show-report",
+    "codecept": "npx codeceptjs run --config codecept.conf.cjs",
+    "codecept:ui": "npx codeceptjs run --steps --config codecept.conf.cjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
@@ -18,13 +22,17 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "codeceptjs": "^3.7.6",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "playwright": "^1.58.2",
     "vite": "^7.3.1"
   }
 }
