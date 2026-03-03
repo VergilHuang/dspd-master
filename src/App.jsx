@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { usePlanData } from "./hooks/usePlanData";
 import SetupPage from "./pages/SetupPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -6,40 +6,38 @@ import DashboardPage from "./pages/DashboardPage";
 const App = () => {
   const planData = usePlanData();
 
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <SetupPage
-              sleepPlan={planData.sleepPlan}
-              inputs={planData.inputs}
-              onInputsChange={planData.handleInputsChange}
-              onGenerate={planData.handleGeneratePlan}
-            />
-          }
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <SetupPage
+          sleepPlan={planData.sleepPlan}
+          inputs={planData.inputs}
+          onInputsChange={planData.handleInputsChange}
+          onGenerate={planData.handleGeneratePlan}
         />
-        <Route
-          path="/dashboard"
-          element={
-            <DashboardPage
-              sleepPlan={planData.sleepPlan}
-              currentDayIndex={planData.currentDayIndex}
-              history={planData.history}
-              actualSleep={planData.actualSleep}
-              actualWake={planData.actualWake}
-              inputs={planData.inputs}
-              setActualSleep={planData.setActualSleep}
-              setActualWake={planData.setActualWake}
-              onDayComplete={planData.handleDayComplete}
-              onResetAll={planData.handleResetAll}
-            />
-          }
+      ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <DashboardPage
+          sleepPlan={planData.sleepPlan}
+          currentDayIndex={planData.currentDayIndex}
+          history={planData.history}
+          actualSleep={planData.actualSleep}
+          actualWake={planData.actualWake}
+          inputs={planData.inputs}
+          setActualSleep={planData.setActualSleep}
+          setActualWake={planData.setActualWake}
+          onDayComplete={planData.handleDayComplete}
+          onResetAll={planData.handleResetAll}
         />
-      </Routes>
-    </Router>
-  );
+      ),
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;
