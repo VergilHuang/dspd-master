@@ -143,9 +143,9 @@ Scenario("點擊「達標前進」應推進天數並紀錄達標", ({ I }) => {
   I.see("第 2 天進度");
 });
 
-Scenario("點擊「失敗重試」天數不應推進", ({ I }) => {
+Scenario("點擊「失敗重試」天數應推進且延續目標", ({ I }) => {
   I.click("結算：失敗重試");
-  I.see("第 1 天進度");
+  I.see("第 2 天進度");
   I.see("失敗");
 });
 
@@ -345,4 +345,68 @@ Scenario("目標與當前時間完全相同時應仍可生成計畫", ({ I }) =>
 
   I.click("生成調整計畫");
   I.see("Day 1");
+});
+
+// ============================================================
+// 10. 計畫天數溢出 Bug 測試
+// ============================================================
+Feature("計畫天數溢出 Bug");
+
+// 輔助函式：設定只差 15 分鐘的時間，讓計畫只產生 2 天
+const setShortPlanInputs = (I) => {
+  I.executeScript(() => {
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    // currentSleep=02:15, currentWake=10:15, targetSleep=02:00, targetWake=10:00
+    // diff = -15 分鐘 → daysNeeded = ceil(15/15) = 1 → plan 有 Day1 + Day2 = 2 天
+    const values = ["02:15", "10:15", "02:00", "10:00"];
+    values.forEach((v, i) => {
+      const nativeSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        "value",
+      ).set;
+      nativeSetter.call(timeInputs[i], v);
+      timeInputs[i].dispatchEvent(new Event("input", { bubbles: true }));
+      timeInputs[i].dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  });
+  I.selectOption("select", "15");
+};
+
+Before(({ I }) => {
+  I.amOnPage("/");
+  I.executeScript(() => localStorage.clear());
+  I.refreshPage();
+});
+
+Scenario("失敗重試應插入新的一天並推進", async ({ I }) => {
+  setShortPlanInputs(I);
+  I.click("生成調整計畫");
+  // Day 1
+  I.click("結算：失敗重試");
+  // 推進到 Day 2
+  I.see("第 2 天進度");
+
+  // 原本 2 天，失敗 1 次後應變 3 天所以表格應該有 3 行
+  const rows = await I.grabNumberOfVisibleElements("tbody tr");
+  assert.strictEqual(rows, 3, `失敗一次後計畫長度應變為 3`);
+
+  // 並且沒有 crash
+  I.see("今日作息目標");
+  I.see("AI 睡眠狀態評估報告");
+  I.dontSee("undefined");
+});
+
+Scenario("最後一天達標後繼續結算不應無限延長", async ({ I }) => {
+  setShortPlanInputs(I);
+  I.click("生成調整計畫");
+  // Day 1 達標 -> Day 2
+  I.click("結算：達標前進");
+  // Day 2 達標 -> 結束
+  I.click("結算：達標前進");
+
+  // 再次點擊不應該推進到 Day 3
+  I.click("結算：達標前進");
+  I.see("第 2 天進度"); // 仍然停留
+  const rows = await I.grabNumberOfVisibleElements("tbody tr");
+  assert.strictEqual(rows, 2, `最後一天反覆達標不應延長計畫`);
 });

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, RotateCcw } from "lucide-react";
+import { usePlanStore } from "../store/usePlanStore";
 import { addMinutes } from "../utils/timeUtils";
 import { generateReportText } from "../utils/reportGenerator";
 import { copyToClipboard } from "../utils/clipboard";
@@ -11,20 +12,17 @@ import QuickTips from "../components/QuickTips";
 import ScheduleTable from "../components/ScheduleTable";
 import AIReport from "../components/AIReport";
 import ResetModal from "../components/ResetModal";
+import SuccessScreen from "../components/SuccessScreen";
 
-const DashboardPage = ({
-  sleepPlan,
-  currentDayIndex,
-  history,
-  actualSleep,
-  actualWake,
-  inputs,
-  setActualSleep,
-  setActualWake,
-  onDayComplete,
-  onResetAll,
-}) => {
+const DashboardPage = () => {
   const navigate = useNavigate();
+  const sleepPlan = usePlanStore((s) => s.sleepPlan);
+  const currentDayIndex = usePlanStore((s) => s.currentDayIndex);
+  const history = usePlanStore((s) => s.history);
+  const inputs = usePlanStore((s) => s.inputs);
+  const resetAll = usePlanStore((s) => s.resetAll);
+  const isFinished = usePlanStore((s) => s.isFinished);
+
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -36,6 +34,14 @@ const DashboardPage = ({
   }, [sleepPlan, navigate]);
 
   if (!sleepPlan) return null; // 攔截跳轉前的渲染
+
+  if (isFinished) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 flex items-center justify-center relative overflow-hidden">
+        <SuccessScreen />
+      </div>
+    );
+  }
 
   const todayGoal = sleepPlan[currentDayIndex];
   const progressPercent = (currentDayIndex / (sleepPlan.length - 1)) * 100;
@@ -56,7 +62,7 @@ const DashboardPage = ({
   };
 
   const handleConfirmReset = () => {
-    onResetAll();
+    resetAll();
     setShowResetConfirm(false);
     // 重設後狀態會變，useEffect 會自動將其導向 '/'
   };
@@ -94,11 +100,6 @@ const DashboardPage = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <DayProgress
             todayGoal={todayGoal}
-            actualSleep={actualSleep}
-            actualWake={actualWake}
-            onActualSleepChange={setActualSleep}
-            onActualWakeChange={setActualWake}
-            onDayComplete={onDayComplete}
             blueLightCutoff={blueLightCutoff}
           />
           <QuickTips />

@@ -1,9 +1,14 @@
 import { Clock } from "lucide-react";
+import { usePlanStore } from "../store/usePlanStore";
 import Card from "./Card";
 
-const SetupForm = ({ inputs, onInputsChange, onGenerate }) => {
+const SetupForm = () => {
+  const inputs = usePlanStore((s) => s.inputs);
+  const setInputs = usePlanStore((s) => s.setInputs);
+  const generatePlan = usePlanStore((s) => s.generatePlan);
+
   const handleChange = (field, value) => {
-    onInputsChange({ ...inputs, [field]: value });
+    setInputs({ ...inputs, [field]: value });
   };
 
   return (
@@ -82,7 +87,7 @@ const SetupForm = ({ inputs, onInputsChange, onGenerate }) => {
         </div>
 
         <button
-          onClick={onGenerate}
+          onClick={generatePlan}
           className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-lg transition-colors mt-4"
         >
           生成調整計畫

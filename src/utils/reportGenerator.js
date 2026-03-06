@@ -30,6 +30,8 @@ export const generateReportText = ({
   const detailLogs = history
     .map((record, idx) => {
       const p = plan[idx];
+      if (!p) return null; // 防禦：history 超出 plan 範圍時跳過
+
       // 相容舊版 boolean 資料結構
       const actSleep = record.actualSleep || p.sleep;
       const actWake = record.actualWake || p.wake;
@@ -41,6 +43,7 @@ export const generateReportText = ({
 
       return `Day ${idx + 1}:\n  - 目標: 入睡 ${p.sleep} | 起床 ${p.wake}\n  - 實際: 入睡 ${actSleep} | 起床 ${actWake}\n  - 實際時長: ${formatDuration(duration)}\n  - 狀態: ${isSuccess ? "✅ 達標" : "❌ 未達標"}`;
     })
+    .filter(Boolean)
     .join("\n\n");
 
   const avgDuration = validRecords ? totalActualDuration / validRecords : 0;
