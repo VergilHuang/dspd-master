@@ -5,6 +5,7 @@ import {
   clearPlanData,
 } from "../utils/localStorageHandler";
 import { generatePlan } from "../utils/planGenerator";
+import { calculateDuration, addMinutes } from "../utils/timeUtils";
 
 export const usePlanStore = create((set, get) => ({
   // --- State ---
@@ -94,6 +95,26 @@ export const usePlanStore = create((set, get) => ({
         }
         newDayIndex = currentDayIndex;
         newIsFinished = true;
+      }
+    }
+
+    // 計算並應用睡眠負債動態調整 (若還有下一天)
+    if (!newIsFinished && newDayIndex < newSleepPlan.length) {
+      const actualDuration = calculateDuration(actualSleep, actualWake);
+      // 正常目標 7 小時 (420 分鐘)
+      const debt = Math.max(0, 420 - actualDuration);
+      if (debt > 0) {
+        // 最多增加 120 分鐘補眠時間
+        const compensation = Math.min(debt, 120);
+        // 將增加的時間平分，分別提早入睡與延後起床
+        const shiftMinutes = Math.floor(compensation / 2);
+        if (shiftMinutes > 0) {
+          newSleepPlan[newDayIndex] = {
+            ...newSleepPlan[newDayIndex],
+            sleep: addMinutes(newSleepPlan[newDayIndex].sleep, -shiftMinutes),
+            wake: addMinutes(newSleepPlan[newDayIndex].wake, shiftMinutes),
+          };
+        }
       }
     }
 

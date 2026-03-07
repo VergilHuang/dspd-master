@@ -13,13 +13,9 @@ const QuickTips = () => (
       </li>
       <li className="flex gap-2">
         <span className="text-indigo-400 font-bold">2.</span>
-        <span>白天絕不午睡，以累積足夠的睡眠壓力。</span>
-      </li>
-      <li className="flex gap-2">
-        <span className="text-indigo-400 font-bold">3.</span>
         <span>
-          若提早醒來（如睡 3
-          小時就醒），請保持環境昏暗，不要滑手機，讓身體盡量維持在休息狀態。
+          若下午極度疲倦，可嚴格限制小睡15~20分鐘，若超過30分鐘會嚴重影響睡眠慣性(Sleep
+          Inertia)，且會消耗掉晚間入睡所需的睡眠壓力(Sleep Pressure)。
         </span>
       </li>
     </ul>
