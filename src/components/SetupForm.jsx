@@ -1,5 +1,5 @@
 import { Clock } from "lucide-react";
-import { usePlanStore } from "../store/usePlanStore";
+import { usePlanStore } from "@/store/usePlanStore";
 import Card from "./Card";
 
 const SetupForm = () => {

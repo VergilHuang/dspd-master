@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePlanStore } from "../store/usePlanStore";
-import SetupForm from "../components/SetupForm";
-import SleepGuide from "../components/SleepGuide";
+import { usePlanStore } from "@/store/usePlanStore";
+import SetupForm from "@/components/SetupForm";
+import SleepGuide from "@/components/SleepGuide";
 
 const SetupPage = () => {
   const navigate = useNavigate();

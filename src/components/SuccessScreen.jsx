@@ -1,7 +1,7 @@
 import { Trophy, Clock, CalendarCheck, RotateCcw, Star } from "lucide-react";
-import { usePlanStore } from "../store/usePlanStore";
-import { calculateDuration, formatDuration } from "../utils/timeUtils";
-import Card from "./Card";
+import { usePlanStore } from "@/store/usePlanStore";
+import { calculateDuration, formatDuration } from "@/utils/timeUtils";
+import Card from "@/components/Card";
 
 const SuccessScreen = () => {
   const history = usePlanStore((s) => s.history);

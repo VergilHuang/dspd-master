@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, RotateCcw } from "lucide-react";
-import { usePlanStore } from "../store/usePlanStore";
-import { addMinutes } from "../utils/timeUtils";
-import { generateReportText } from "../utils/reportGenerator";
-import { copyToClipboard } from "../utils/clipboard";
+import { usePlanStore } from "@/store/usePlanStore";
+import { addMinutes } from "@/utils/timeUtils";
+import { generateReportText } from "@/utils/reportGenerator";
+import { copyToClipboard } from "@/utils/clipboard";
 
 // Components
-import DayProgress from "../components/DayProgress";
-import QuickTips from "../components/QuickTips";
-import ScheduleTable from "../components/ScheduleTable";
-import AIReport from "../components/AIReport";
-import ResetModal from "../components/ResetModal";
-import SuccessScreen from "../components/SuccessScreen";
+import DayProgress from "@/components/DayProgress";
+import QuickTips from "@/components/QuickTips";
+import ScheduleTable from "@/components/ScheduleTable";
+import AIReport from "@/components/AIReport";
+import ResetModal from "@/components/ResetModal";
+import SuccessScreen from "@/components/SuccessScreen";
 
 const DashboardPage = () => {
   const navigate = useNavigate();

@@ -3,9 +3,9 @@ import {
   loadPlanData,
   savePlanData,
   clearPlanData,
-} from "../utils/localStorageHandler";
-import { generatePlan } from "../utils/planGenerator";
-import { calculateDuration, addMinutes } from "../utils/timeUtils";
+} from "@/utils/localStorageHandler";
+import { generatePlan } from "@/utils/planGenerator";
+import { calculateDuration, addMinutes } from "@/utils/timeUtils";
 
 export const usePlanStore = create((set, get) => ({
   // --- State ---

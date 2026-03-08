@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun, CheckCircle2, XCircle, Bell } from "lucide-react";
-import { usePlanStore } from "../store/usePlanStore";
-import Card from "./Card";
+import { usePlanStore } from "@/store/usePlanStore";
+import Card from "@/components/Card";
 
 const DayProgress = ({ todayGoal, blueLightCutoff }) => {
   const completeDay = usePlanStore((s) => s.completeDay);
