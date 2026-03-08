@@ -26,18 +26,17 @@ const DashboardPage = () => {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // 若尚未有計畫，自動導向至 Setup
   useEffect(() => {
     if (!sleepPlan) {
       navigate("/");
     }
   }, [sleepPlan, navigate]);
 
-  if (!sleepPlan) return null; // 攔截跳轉前的渲染
+  if (!sleepPlan) return null;
 
   if (isFinished) {
     return (
-      <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen bg-bg-base text-text-base p-4 md:p-8 flex items-center justify-center relative overflow-hidden">
         <SuccessScreen />
       </div>
     );
@@ -64,35 +63,35 @@ const DashboardPage = () => {
   const handleConfirmReset = () => {
     resetAll();
     setShowResetConfirm(false);
-    // 重設後狀態會變，useEffect 會自動將其導向 '/'
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 relative">
+    <div className="min-h-screen bg-bg-base text-text-base p-4 md:p-8 relative">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <Calendar className="text-indigo-400" />第 {todayGoal.day} 天進度
+              <Calendar className="text-primary-light" />第 {todayGoal.day}{" "}
+              天進度
             </h1>
-            <p className="text-slate-400">
+            <p className="text-text-muted">
               終極目標：{sleepPlan[sleepPlan.length - 1].sleep} 入睡 /{" "}
               {sleepPlan[sleepPlan.length - 1].wake} 起床
             </p>
           </div>
           <button
             onClick={() => setShowResetConfirm(true)}
-            className="flex items-center gap-2 text-sm text-slate-400 hover:text-red-400 transition-colors"
+            className="flex items-center gap-2 text-sm text-text-muted hover:text-danger-light transition-colors"
           >
             <RotateCcw size={16} /> 重新設定計畫
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
+        <div className="w-full bg-bg-surface h-3 rounded-full overflow-hidden">
           <div
-            className="bg-indigo-500 h-full transition-all duration-500"
+            className="bg-primary h-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
           />
         </div>

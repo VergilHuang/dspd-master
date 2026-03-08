@@ -7,14 +7,12 @@ const SuccessScreen = () => {
   const history = usePlanStore((s) => s.history);
   const resetAll = usePlanStore((s) => s.resetAll);
 
-  // 計算平均睡眠時數與總天數
   const totalDays = history.length;
   const totalSleepMins = history.reduce((acc, record) => {
     return acc + calculateDuration(record.actualSleep, record.actualWake);
   }, 0);
   const avgSleepMins = totalDays > 0 ? totalSleepMins / totalDays : 0;
 
-  // 計算一次成功的比例（用來給評語）
   const successCount = history.filter((r) => r.success).length;
   const successRate = totalDays > 0 ? successCount / totalDays : 0;
 
@@ -30,51 +28,51 @@ const SuccessScreen = () => {
   return (
     <Card className="max-w-2xl mx-auto mt-8 p-8 flex flex-col items-center text-center animate-in fade-in zoom-in duration-500">
       <div className="relative mb-6">
-        <div className="absolute inset-0 bg-yellow-500 blur-3xl opacity-20 rounded-full animate-pulse"></div>
-        <Trophy className="text-yellow-400 relative z-10" size={80} />
+        <div className="absolute inset-0 bg-achievement blur-3xl opacity-20 rounded-full animate-pulse"></div>
+        <Trophy className="text-achievement relative z-10" size={80} />
       </div>
 
-      <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500 mb-2">
+      <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-achievement-light to-achievement-dark mb-2">
         恭喜成功達標！
       </h1>
-      <p className="text-slate-400 mb-8 max-w-md mx-auto">
+      <p className="text-text-muted mb-8 max-w-md mx-auto">
         你已經完成了這次的睡眠調整計畫。來看看你這段時間的努力成果吧：
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-8">
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 flex flex-col items-center">
-          <CalendarCheck className="text-indigo-400 mb-3" size={32} />
+        <div className="bg-bg-surface/50 border border-border rounded-2xl p-6 flex flex-col items-center">
+          <CalendarCheck className="text-primary-light mb-3" size={32} />
           <div className="text-3xl font-mono font-bold text-white mb-1">
             {totalDays}{" "}
-            <span className="text-sm text-slate-500 font-sans">天</span>
+            <span className="text-sm text-text-faint font-sans">天</span>
           </div>
-          <div className="text-sm text-slate-400">總進行天數</div>
+          <div className="text-sm text-text-muted">總進行天數</div>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 flex flex-col items-center">
-          <Clock className="text-emerald-400 mb-3" size={32} />
+        <div className="bg-bg-surface/50 border border-border rounded-2xl p-6 flex flex-col items-center">
+          <Clock className="text-success-light mb-3" size={32} />
           <div className="text-3xl font-mono font-bold text-white mb-1">
             {formatDuration(avgSleepMins)}
           </div>
-          <div className="text-sm text-slate-400">平均每日睡眠時數</div>
+          <div className="text-sm text-text-muted">平均每日睡眠時數</div>
         </div>
       </div>
 
-      <div className="w-full bg-slate-800/80 rounded-2xl p-6 mb-8 border border-slate-700 relative overflow-hidden">
+      <div className="w-full bg-bg-surface/80 rounded-2xl p-6 mb-8 border border-border relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-10">
           <Star size={100} />
         </div>
-        <h3 className="text-lg font-bold text-slate-300 flex items-center gap-2 mb-2 relative z-10">
-          <Star className="text-yellow-400" size={20} /> AI 睡眠品質評估
+        <h3 className="text-lg font-bold text-text-secondary flex items-center gap-2 mb-2 relative z-10">
+          <Star className="text-achievement" size={20} /> AI 睡眠品質評估
         </h3>
-        <p className="text-slate-300 text-left leading-relaxed relative z-10">
+        <p className="text-text-secondary text-left leading-relaxed relative z-10">
           {feedback}
         </p>
       </div>
 
       <button
         onClick={() => resetAll()}
-        className="w-full md:w-auto flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-8 rounded-xl transition-all active:scale-95 shadow-lg shadow-indigo-900/20"
+        className="w-full md:w-auto flex items-center justify-center gap-2 bg-primary-dark hover:bg-primary text-white font-bold py-4 px-8 rounded-xl transition-all active:scale-95 shadow-lg shadow-primary-dark/20"
       >
         <RotateCcw size={20} /> 重新設定全新計畫
       </button>

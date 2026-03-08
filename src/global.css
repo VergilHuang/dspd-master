@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  /* === Brand / Primary (Indigo) === */
+  --color-primary: #6366f1; /* indigo-500：主要按鈕、進度條、focus */
+  --color-primary-light: #818cf8; /* indigo-400：圖示、連結、輔助高亮 */
+  --color-primary-subtle: #a5b4fc; /* indigo-300：副標題文字 */
+  --color-primary-dark: #4f46e5; /* indigo-600：hover 底色 */
+
+  /* === Background Layers (Slate) === */
+  --color-bg-base: #0f172a; /* slate-900：頁面底色 */
+  --color-bg-surface: #1e293b; /* slate-800：卡片、modal 表面 */
+  --color-bg-input: #334155; /* slate-700：input/select 背景 */
+  --color-bg-muted: #475569; /* slate-600：次要控制項 hover */
+
+  /* === Border === */
+  --color-border: #334155; /* slate-700：標準邊框 */
+  --color-border-subtle: #475569; /* slate-600：輸入框 hover/focus 前 */
+
+  /* === Text === */
+  --color-text-base: #f1f5f9; /* slate-100：主要文字 */
+  --color-text-secondary: #cbd5e1; /* slate-300：次要文字 */
+  --color-text-muted: #94a3b8; /* slate-400：說明文字 */
+  --color-text-faint: #64748b; /* slate-500：標籤、輔助說明 */
+  --color-text-disabled: #475569; /* slate-600：禁用/待執行文字 */
+
+  /* === Semantic: Success (Emerald) === */
+  --color-success: #10b981; /* emerald-500：達標主調 */
+  --color-success-light: #34d399; /* emerald-400：成功圖示 */
+  --color-success-dark: #059669; /* emerald-600：達標按鈕底色 */
+
+  /* === Semantic: Warning (Amber / Orange) === */
+  --color-warning: #fb923c; /* orange-400：心血管警示 */
+  --color-warning-light: #fbbf24; /* amber-400：AlertTriangle 圖示 */
+  --color-warning-subtle: #fcd34d; /* amber-300：時間高亮 */
+
+  /* === Semantic: Danger (Red / Rose) === */
+  --color-danger: #dc2626; /* red-600：危險按鈕底色 */
+  --color-danger-light: #f87171; /* red-400：失敗標記 */
+  --color-danger-subtle: #fb7185; /* rose-400：失敗狀態文字 */
+
+  /* === Semantic: Achievement (Yellow) === */
+  --color-achievement: #facc15; /* yellow-400：獎杯圖示 */
+  --color-achievement-light: #fde047; /* yellow-300：漸層標題起點 */
+  --color-achievement-dark: #f59e0b; /* amber-500：漸層標題終點 */
+}
